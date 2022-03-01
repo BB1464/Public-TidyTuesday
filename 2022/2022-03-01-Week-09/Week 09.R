@@ -17,9 +17,6 @@ library(tidyverse)
 tuesdata <- tidytuesdayR::tt_load('2022-03-01')
 stations <- tuesdata$stations
 
-
-tuesday <- tt_load('2022-03-01')
-
 stations <- tuesday$stations
 
 
@@ -33,7 +30,7 @@ us_states <- tibble(
   state_name = state.name,
   state_abb = state.abb)
 
-stations <- stations %>%
+stations1 <- stations %>%
   filter(FUEL_TYPE_CODE == "ELEC",
          STATUS_CODE == "E") %>%
   count(STATE) %>%
@@ -48,10 +45,10 @@ stations <- stations %>%
                          total > 2000 & total <= 3000 ~ "2000-3000",
                          total > 3000 ~ "3000+"))
 
-# Create map ----
+# Visualize the Map
 
 us_elec_stations <- map_data("state") %>%
-  left_join(stations, by = c("region" = "state_name"))
+  left_join(stations1, by = c("region" = "state_name"))
 
 us_map <- ggplot(data = us_elec_stations,
                  mapping = aes(x = long, y = lat, group = group,
@@ -69,4 +66,69 @@ us_map <- ggplot(data = us_elec_stations,
 
 # Save plot ----
 
-ggsave("fig/2022_03_01_fuel.png", us_map, dpi = 320, width = 12, height = 6)
+ggsave("fig/2022_03_01_fuel.png", us_map, dpi = 320, width = 12, height = 6,path = '2022/2022-03-01-Week-09')
+
+
+# Data Wrangling 2
+
+stations <-
+  stations %>% mutate(
+    GROUPS_WITH_ACCESS_CODE = fct_collapse(
+      GROUPS_WITH_ACCESS_CODE,
+      "private access" = c(
+        "Private",
+        "Private - Call ahead",
+        "Private - Card key at all times",
+        "Private - Credit card after hours",
+        "Private - Credit card at all times",
+        "Private - Fleet customers only",
+        "Private - Government only",
+        "TEMPORARILY UNAVAILABLE (Private - Government only)",
+        "TEMPORARILY UNAVAILABLE (Private)"
+      ),
+      "public access" = c(
+        "Public",
+        "Public - Call ahead",
+        "Public - Card key after hours",
+        "Public - Card key at all times",
+        "Public - Credit card after hours",
+        "Public - Credit card at all times",
+        "Public - Government only",
+        "Public - Limited hours",
+        "TEMPORARILY UNAVAILABLE (Public - Call ahead)",
+        "TEMPORARILY UNAVAILABLE (Public - Card key at all times)",
+        "TEMPORARILY UNAVAILABLE (Public - Credit card after hours)",
+        "TEMPORARILY UNAVAILABLE (Public - Credit card at all times)",
+        "TEMPORARILY UNAVAILABLE (Public)"
+      ),
+      planned = c(
+        "PLANNED - not yet accessible (Private - Fleet customers only)",
+        "PLANNED - not yet accessible (Private - Government only)",
+        "PLANNED - not yet accessible (Private)",
+        "PLANNED - not yet accessible (Public - Call ahead)",
+        "PLANNED - not yet accessible (Public - Card key at all times)"
+        ,
+        "PLANNED - not yet accessible (Public - Credit card at all times)",
+        "PLANNED - not yet accessible (Public)"
+      )
+    )
+  )
+
+
+
+stations %>% group_by(FUEL_TYPE_CODE, GROUPS_WITH_ACCESS_CODE) %>% count(GROUPS_WITH_ACCESS_CODE) %>% ggplot(aes(FUEL_TYPE_CODE, n, fill =
+                                                                                                                   GROUPS_WITH_ACCESS_CODE)) + geom_col(position = position_dodge(.9)) + geom_text(aes(label =
+                                                                                                                                                                                                         n), vjust = -0.5, position = position_dodge(.9)) + scale_fill_brewer(palette = 'Set1') +
+  labs(
+    title = 'Number of alternative vehicle fuel stations in the lower 48 states',
+    y = 'Number of Access Code',
+    x = 'Fuel Type',
+    caption = 'Source: U.S. Energy Information Administration Based on US Department of Energy'
+  ) + theme_minimal() +
+  theme(legend.title = element_blank(),
+        legend.position = c(0.1, 0.7))
+
+ggsave('fig/Plot2.png',width = 12,height = 9,dpi=300,path = '2022/2022-03-01-Week-09')
+
+
+
