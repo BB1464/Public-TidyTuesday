@@ -66,7 +66,7 @@ us_map <- ggplot(data = us_elec_stations,
 
 # Save plot ----
 
-ggsave("fig/2022_03_01_fuel.png", us_map, dpi = 320, width = 12, height = 6,path = '2022/2022-03-01-Week-09')
+ggsave("2022_03_01_fuel.png", us_map, dpi = 320, width = 12, height = 6,path = '2022/2022-03-01-Week-09')
 
 
 # Data Wrangling 2
@@ -128,7 +128,7 @@ stations %>% group_by(FUEL_TYPE_CODE, GROUPS_WITH_ACCESS_CODE) %>% count(GROUPS_
   theme(legend.title = element_blank(),
         legend.position = c(0.1, 0.7))
 
-ggsave('fig/Plot2.png',width = 12,height = 9,dpi=300,path = '2022/2022-03-01-Week-09')
+ggsave('2022-03-01-bar.png',width = 12,height = 9,dpi=300,path = '2022/2022-03-01-Week-09')
 
 
 
