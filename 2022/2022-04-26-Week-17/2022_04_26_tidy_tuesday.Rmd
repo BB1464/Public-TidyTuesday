@@ -57,11 +57,11 @@ tt %>%
 ```
 
 ```{r, Import_the_image}
-path_img=setwd(dir = '2022/2022-04-26-Week-17')
+path_img=here::here("E:/R Projects Files/Public TidyTuesday/2022/2022-04-26-Week-17/Image")
 
 img_d <- tibble(
   media = c("Linkedin", "Twitter"),
-  img = str_c(path_img, c("linkedIn.JPEG", "twitter.JPEG"))
+  img = str_c(path_img, c("linkedIn.jpg", "twitter.jpg"))
 )
 ```
 
@@ -83,8 +83,6 @@ foo <- gems %>%
   add_tally(n, name = "total") %>% 
   mutate(perc = n/total) %>% 
   filter(check)
-
-
 ```
 
 
@@ -148,32 +146,14 @@ design <- "
 13
 "
 
-p1 + p2 + p3 + plot_layout(design = design) + plot_annotation(title = "Notebook Titles")
+P4=p1 + p2 + p3 + plot_layout(design = design) + plot_annotation(title = "Notebook Titles")
 ```
 
 
-```{r, add_image}
-p_dat <- ggplot_build(p)
 
-p_map <- p_dat$data[[1]] %>% 
-  select(xmin, xmax, ymin, ymax) %>% 
-  bind_cols(foo %>% select(media)) %>% 
-  left_join(img_d, by = "media")
-
-for (i in seq(nrow(p_map))){
-  
-  p <- p +
-    annotation_custom(
-      rasterGrob(image_read(p_map$img[i]), 
-                 width = unit(1, "npc"),  # 
-                 height = unit(1, "npc")),
-      xmin = p_map$xmin[i], 
-      xmax = p_map$xmax[i],
-      ymin = p_map$ymin[i],
-      ymax = p_map$ymax[i])
-}
-  
-p
+```{r,Twitter_and_Linkdin}
+P6 <- ggplot(data = foo,mapping = aes(x = media,y = perc,fill=media))+geom_col(show.legend = FALSE)+scale_fill_brewer(palette = 'Set1')+labs(title = 'Kaggle Hidden Gems',caption = '#TidyTuesday Week 17\nOluwafemi Oyedele')+
+  scale_y_continuous(name = 'Percentage of Social Media Log (%)',limits = c(0,1.00),expand = c(0,0))+ggdark::dark_mode()+theme(plot.title = element_text(hjust = 0.5),plot.caption = element_text(hjust = 0.5))
 ```
 
 
@@ -184,8 +164,9 @@ Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your p
 ```{r}
 
 # This will save your most recent plot
-ggsave(
-  filename = "My TidyTuesday Plot.png",
-  device = "png")
+#ggsave(here::here("2022/2022-04-26-Week-17"),'WORD.png',width = 12,height = 8,dpi = 400,plot = P4)
+
+
+ggsave(path =here::here("2022/2022-04-26-Week-17"),'hidden_gem.png',plot = P6,width = 10,height = 8,dpi = 400)
 
 ```
