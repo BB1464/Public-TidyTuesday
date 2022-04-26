@@ -1,0 +1,191 @@
+---
+title: "TidyTemplate"
+date: 2022-04-26
+output: html_document
+---
+
+# TidyTuesday
+
+Join the R4DS Online Learning Community in the weekly #TidyTuesday event!
+Every week we post a raw dataset, a chart or article related to that dataset, and ask you to explore the data.
+While the dataset will be “tamed”, it will not always be tidy! As such you might need to apply various R for Data Science techniques to wrangle the data into a true tidy format.
+The goal of TidyTuesday is to apply your R skills, get feedback, explore other’s work, and connect with the greater #RStats community!
+As such we encourage everyone of all skills to participate!
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(tidytuesdayR)
+library(ggwordcloud)
+library(magick)
+```
+
+# Load the weekly Data
+
+Download the weekly data and make available in the `tt` object.
+
+```{r Load}
+
+tt <- tt_load("2022-04-26")
+
+```
+
+
+# Readme
+
+Take a look at the readme for the weekly data to get insight on the dataset.
+This includes a data dictionary, source, and a link to an article on the data.
+
+```{r Readme, eval = interactive()}
+
+tt
+
+```
+
+
+# Glimpse Data
+
+Take an initial look at the format of the data available.
+
+```{r Glimpse}
+
+tt %>% 
+  map(glimpse)
+
+```
+
+```{r, Import_the_image}
+path_img=setwd(dir = '2022/2022-04-26-Week-17')
+
+img_d <- tibble(
+  media = c("Linkedin", "Twitter"),
+  img = str_c(path_img, c("linkedIn.JPEG", "twitter.JPEG"))
+)
+```
+
+
+# Wrangle
+
+Explore the data and process it into a nice format for plotting! Access each dataset by name by using a dollarsign after the `tt` object and then the name of the data set.
+
+```{r Wrangle}
+gems <- tt[[1]]
+
+foo <- gems %>% 
+  distinct(author_twitter, author_linkedin) %>%
+  pivot_longer(everything(), names_to = "media", values_to = "links") %>% 
+  mutate(check = !is.na(links)) %>% 
+  mutate(media = str_to_title(str_replace(media, "author_", ""))) %>% 
+  group_by(media) %>% 
+  count(check) %>% 
+  add_tally(n, name = "total") %>% 
+  mutate(perc = n/total) %>% 
+  filter(check)
+
+
+```
+
+
+# Visualize
+
+Using your processed dataset, create your unique visualization.
+
+```{r Visualize}
+p <- foo %>% 
+  ggplot(aes(media, perc)) +
+  geom_col(fill = "white") +
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 1, 0.1)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(x = "", y = "", title = "Percentage of Authors with Social Media on their Profile")
+  
+```
+
+
+```{r, word_cloud}
+p1 <- gems %>% 
+  select(title) %>% 
+  mutate(title = str_to_lower(title)) %>% 
+  mutate(title = str_replace(title, "covid-19", "covid19")) %>% 
+  unnest_tokens(word, title) %>% 
+  anti_join(stop_words, by = "word") %>% 
+  count(word, sort = TRUE) %>% 
+  head(45) %>% 
+  filter(!(word %in% c("1", "2"))) %>%
+  ggplot(aes(label = word, size = n/10, col = n)) +
+  geom_text_wordcloud(seed = 4321) +
+  scale_size_area(max_size = 20) +
+  scale_color_viridis(begin = 0.3, end = 0.8) +
+  theme_void() +
+  labs(title = "Most frequent words")
+
+p2 <- gems %>% 
+  mutate(title_len = str_length(title)) %>% 
+  ggplot(aes(title_len)) +
+  geom_histogram(fill = "blue", binwidth = 1) +
+  theme_tufte() +
+  labs(title = "Length of Title", x = "String Length")
+
+p3 <- gems %>% 
+  mutate(title_len = str_length(title)) %>% 
+  select(title, title_len) %>% 
+  filter(title_len == min(title_len) | title_len == max(title_len)) %>% 
+  group_by(title_len) %>% 
+  ggplot(aes(reorder(title, -title_len, FUN = min), title_len, fill = as.factor(title_len))) +
+  geom_col() +
+  geom_text(aes(x = title, y = 0, label = title), nudge_y = 0.3, hjust = "left", col = "black", size = 4) +
+  coord_flip() +
+  theme_tufte() +
+  theme(legend.position = "none", axis.text.y = element_blank(), axis.ticks.y = element_blank()) +
+  labs(x = "", y = "", title = "Shortest and Longest Titles")
+
+design <- "
+12
+13
+13
+13
+"
+
+p1 + p2 + p3 + plot_layout(design = design) + plot_annotation(title = "Notebook Titles")
+```
+
+
+```{r, add_image}
+p_dat <- ggplot_build(p)
+
+p_map <- p_dat$data[[1]] %>% 
+  select(xmin, xmax, ymin, ymax) %>% 
+  bind_cols(foo %>% select(media)) %>% 
+  left_join(img_d, by = "media")
+
+for (i in seq(nrow(p_map))){
+  
+  p <- p +
+    annotation_custom(
+      rasterGrob(image_read(p_map$img[i]), 
+                 width = unit(1, "npc"),  # 
+                 height = unit(1, "npc")),
+      xmin = p_map$xmin[i], 
+      xmax = p_map$xmax[i],
+      ymin = p_map$ymin[i],
+      ymax = p_map$ymax[i])
+}
+  
+p
+```
+
+
+# Save Image
+
+Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your post on twitter! 
+
+```{r}
+
+# This will save your most recent plot
+ggsave(
+  filename = "My TidyTuesday Plot.png",
+  device = "png")
+
+```
