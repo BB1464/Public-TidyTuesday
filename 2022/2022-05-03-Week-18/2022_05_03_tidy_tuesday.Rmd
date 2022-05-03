@@ -1,0 +1,105 @@
+---
+title: "TidyTemplate"
+date: 2022-05-03
+output: html_document
+---
+
+# TidyTuesday
+
+Join the R4DS Online Learning Community in the weekly #TidyTuesday event!
+Every week we post a raw dataset, a chart or article related to that dataset, and ask you to explore the data.
+While the dataset will be “tamed”, it will not always be tidy! As such you might need to apply various R for Data Science techniques to wrangle the data into a true tidy format.
+The goal of TidyTuesday is to apply your R skills, get feedback, explore other’s work, and connect with the greater #RStats community!
+As such we encourage everyone of all skills to participate!
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(tidytuesdayR)
+library(lubridate)
+library(ggdark)
+```
+
+# Load the weekly Data
+
+Download the weekly data and make available in the `tt` object.
+
+```{r Load}
+
+Cost <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-05-03/average_cost.csv')
+
+Capacity <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-05-03/capacity.csv')
+
+#tt <- tt_load("2022-05-03")
+
+```
+
+
+# Readme
+
+Take a look at the readme for the weekly data to get insight on the dataset.
+This includes a data dictionary, source, and a link to an article on the data.
+
+```{r Readme, eval = interactive()}
+
+tt
+
+```
+
+
+# Glimpse Data
+
+Take an initial look at the format of the data available.
+
+```{r Glimpse}
+
+tt %>% 
+  map(glimpse)
+
+```
+
+# Wrangle
+
+Explore the data and process it into a nice format for plotting! Access each dataset by name by using a dollarsign after the `tt` object and then the name of the data set.
+
+```{r Wrangle}
+tt <- inner_join(Capacity,Cost)
+
+
+```
+
+
+# Visualize
+
+Using your processed dataset, create your unique visualization.
+
+```{r Visualize}
+p1 <- ggplot(data = tt,mapping = aes(x = type,y = total_gw))+geom_jitter()+stat_summary(fun.data = median_hilow,size=1,col='red',fun.args = list(0.50))+
+  dark_theme_classic()+labs(x='Type of Power',y='Total gigawatts',title = 'Exploration of US Solar Power Plant',caption = 'TidyTuesday Week 18\nOluwafemi Oyedele',subtitle = 'The red point shows the confidence interval around the mean')+
+  theme(plot.title  = element_text(family = 'serif',face = 'bold',size = 12,colour = 'blue'),plot.caption = element_text(family = 'serif',face = 'bold',colour = 'blue',size = 12),plot.subtitle = element_text(family = 'serif',face = 'bold',colour = 'blue'))
+
+```
+
+```{r Visualization2}
+p2 <- ggplot(data = tt,mapping = aes(x = year,y = total_gw,fill=type))+geom_col()+scale_fill_brewer(name='Type of Power',palette = 'Set1')+scale_y_continuous(expand = c(0,0))+theme_minimal()+scale_x_continuous(labels = c(2014:2020),breaks = c(2014:2020))+labs(y='Total gigawatts',title = 'Exploration of US Solar Power Plant',caption = 'TidyTuesday Week 18\nOluwafemi Oyedele')+theme(axis.line=element_line())
+
+```
+
+
+# Save Image
+
+Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your post on twitter! 
+
+```{r}
+
+# This will save your most recent plot
+ggsave(path = here::here("2022/2022-05-03-Week-18"),width = 10,height = 8,dpi = 400,plot = p1,'Fig1.png')
+
+
+# Second Plot
+ggsave(path = here::here("2022/2022-05-03-Week-18"),width = 10,height = 8,dpi = 400,plot = p2,'Fig2.png')
+
+
+```
