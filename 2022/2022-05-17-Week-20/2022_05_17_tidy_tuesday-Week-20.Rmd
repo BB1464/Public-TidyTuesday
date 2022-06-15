@@ -96,7 +96,6 @@ Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your p
 
 # This will save your most recent plot
 # This will save your most recent plot
-ggsave(path = here::here("2022/2022-05-17-Week-20"),width = 10,height = 8,dpi = 400,'Fig1.png')
 
 
 ```
