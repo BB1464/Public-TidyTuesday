@@ -21,6 +21,7 @@ library(tidytuesdayR)
 library(ggtext)
 library(showtext)
 library(ggdist)
+library(ggridges)
 
 # load fonts
 font_add_google(name = "Bowlby One SC", family = "bowlby")
@@ -92,7 +93,7 @@ ggplot(data = rent_clean,aes(x = price,y = factor(year)))+geom_density_ridges2()
   scale_x_continuous(labels = scales::dollar_format())+
   theme_classic()+
   labs(x='san Francisco Housing Price',y='Time (year)',title = 'San Francisco House Price Distribution over Time')+coord_cartesian(expand = FALSE)+
-theme(plot.title.position = 'plot',panel.background = element_rect(fill = 'black'),text = element_text(family = 'serif',size = 18))
+theme(plot.title.position = 'plot',panel.background = element_rect(fill = 'black'),text = element_text(family = 'ubuntu',size = 18,colour = 'steelblue'))
 
   
 ```
