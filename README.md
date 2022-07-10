@@ -6,8 +6,7 @@ Repository for my TidyTuesday data visualizations. TidyTuesday is a weekly data 
 <h1 align="center">Electric Car Charging Stations in US </h1>
 
   <p align="center">
-    <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-03-01-Week-09/2022_03_01_fuel.png
-?raw=true" width="60%">
+    <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-03-01-Week-09/2022_03_01_fuel.png?raw=true" width="60%">
       </p>
 
 
