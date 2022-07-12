@@ -131,7 +131,7 @@ flight_clean |>
   theme(axis.ticks.y = element_blank())+labs(
     y = "European Countries",
     x = "Total Number of Flight",
-    title = "European Flights Destination Slightly increase from 2016 to 2022",
+    title = "The Commercial Flights Destination in the EU increases from 2016 to 2022",
     #subtitle = "European Flight Destination!",
     caption = "@OluwafemOyedele | #TidyTuesday | Source: Eurocontrol, 2022"
   )+raincloud_theme
