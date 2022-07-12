@@ -112,7 +112,7 @@ flight_clean <- flight |>
 
 flight_clean <- flight_clean |> 
   group_by(STATE_NAME) |> 
-  mutate(state=fct_reorder(.f = STATE_NAME,.x = FLT_TOT_IFR_2,.fun = mean)) |>
+  #mutate(state=fct_reorder(.f = STATE_NAME,.x = FLT_TOT_IFR_2,.fun = mean)) |>
   summarise(Total_Flight=mean(FLT_TOT_IFR_2))
 
 ```
@@ -124,7 +124,7 @@ Using your processed dataset, create your unique visualization.
 
 ```{r Visualize}
 flight_clean |> 
-  ggplot(aes(x = Total_Flight,y = STATE_NAME))+
+  ggplot(aes(x = Total_Flight,y = fct_reorder(.f = STATE_NAME,.x = Total_Flight,.fun = mean,.desc = TRUE)))+
   geom_segment(aes(yend=STATE_NAME),xend=0,size=0.9)+
   geom_point(size=5,col='red')+
   coord_cartesian(default = FALSE,clip = 'off')+
