@@ -71,7 +71,9 @@ raincloud_theme <- theme(
   #panel.border = element_blank(),
   panel.grid.minor = element_blank(),
   panel.grid.major = element_blank(),
-  panel.background = element_blank()
+  #panel.background = element_blank(),
+  plot.background = element_rect(fill = "#fafafa", colour = "#fafafa"),
+  panel.background=element_rect(fill = "#fafafa", colour = "#fafafa")
 )
 
 ```
@@ -143,6 +145,6 @@ Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your p
 ```{r}
 
 # This will save your most recent plot
-ggsave('EuroControl.png',path = here::here('2022/2022-07-12-Week-28'),width = 11,height = 8,dpi = 290,limitsize = TRUE)
+ggsave('EuroControl.png',path = here::here('2022/2022-07-12-Week-28'),width = 11,height = 8,dpi = 290,limitsize = TRUE,bg = '#fafafa')
 
 ```
