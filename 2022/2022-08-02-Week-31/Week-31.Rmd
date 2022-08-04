@@ -116,7 +116,7 @@ ggplot(data = frogs1,
     axis.title.x  = element_text(size=16, color=txt_col, margin = margin(10,0,0,0)),
     axis.title.y  = element_text(size=20, color=txt_col),
     axis.text.x = element_text(size=18, color=txt_col),
-    axis.text.y = element_text(size=18, color=txt_col,margin=margin(t = 0,r = 20,b = 0,l = 15)),
+    axis.text.y = element_text(size=18, color=txt_col,margin=margin(t = 0,r = 22,b = 0,l = 15)),
     plot.title = element_text(size=22, color=txt_col, hjust=.5, face="bold", margin=margin(0,0,30,0)),
     plot.caption = element_text(hjust=.5, margin=margin(20,0,0,0), size=18, color=txt_col, face="bold"),
     plot.background = element_rect(color=bg, fill=bg),
@@ -136,7 +136,9 @@ Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your p
 ```{r}
 
 # This will save your most recent plot
+showtext_auto(enable = TRUE) 
 showtext_opts(dpi = 300) 
+
 
 ggsave('Oregon_Frog.png',path = here::here('2022/2022-08-02-Week-31'),width = 10,height = 9,dpi = 300)
 
