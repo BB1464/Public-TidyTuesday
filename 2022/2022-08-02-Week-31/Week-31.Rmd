@@ -15,13 +15,28 @@ As such we encourage everyone of all skills to participate!
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = TRUE)
-
+library(janitor)
+library(MetBrewer)
+library(showtext)
 library(tidyverse)
 library(tidytuesdayR)
 library(ggalluvial)
 
 
 ```
+
+# Misc
+
+```{r}
+
+font <- "Abel"
+font_add_google(family=font, font)
+showtext_auto(enable = TRUE) 
+theme_set(theme_minimal(base_family = font))
+bg <- "grey85"
+txt_col <- "black"
+```
+
 
 # Load the weekly Data
 
@@ -92,10 +107,26 @@ ggplot(data = frogs1,
        aes(y = n/3, axis1 = Subsite, axis2 = HabType,axis3=Female)) +
   geom_alluvium(aes(fill = Structure), width = 1/12) +
   geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
-  scale_fill_brewer(type = "qual", palette = "Set1") +
+  scale_fill_met_d(name = 'Hokusai1') +
   labs(title = "Number of Oregon Spotted Frogs Tracked by Habitat",caption = '# TidyTuesday | Data: usgs.gov | Design: Oluwafemi Oyedele',y='Number of Frogs')+
   theme_minimal()+
-  theme(plot.background = element_rect(fill = '#fafafa',colour = NA),plot.margin = margin(t = 20,r = 20,b = 20,l = 20),panel.grid = element_blank(),plot.title.position  = 'plot',plot.title = element_text(margin = margin(t = 0,r = 10,b = 0,l = 0)))
+  coord_cartesian(clip = 'off')+
+  theme(
+    panel.grid = element_blank(),
+    axis.title.x  = element_text(size=16, color=txt_col, margin = margin(10,0,0,0)),
+    axis.title.y  = element_text(size=20, color=txt_col),
+    axis.text.x = element_text(size=20, color=txt_col),
+    axis.text.y = element_text(size=20, color=txt_col),
+    plot.title = element_text(size=32, color=txt_col, hjust=.5, face="bold", margin=margin(0,0,30,0)),
+    plot.caption = element_text(hjust=.5, margin=margin(20,0,0,0), size=18, color=txt_col, face="bold"),
+    plot.background = element_rect(color=bg, fill=bg),
+    plot.title.position = "panel",
+    plot.margin = margin(30,30,30,30),
+    legend.position = "none"
+    )
+
+  
+#theme(plot.background = element_rect(fill = '#fafafa',colour = NA),plot.margin = margin(t = 20,r = 20,b = 20,l = 20),panel.grid = element_blank(),plot.title.position  = 'plot',plot.title = element_text(margin = margin(t = 0,r = 10,b = 0,l = 0)))
 ```
 
 # Save Image
@@ -105,6 +136,9 @@ Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your p
 ```{r}
 
 # This will save your most recent plot
-ggsave('Oregon_Frog.png',path = here::here('2022/2022-08-02-Week-31'),width = 15,height = 10,dpi = 350,limitsize = TRUE,bg = '#fafafa')
+ggsave('Oregon_Frog.png',path = here::here('2022/2022-08-02-Week-31'),width = 16,height = 10,dpi = 400)
+
+showtext_auto(FALSE)
+
 
 ```
