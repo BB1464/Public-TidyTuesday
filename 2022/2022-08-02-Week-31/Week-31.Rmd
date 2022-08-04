@@ -136,9 +136,9 @@ Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your p
 ```{r}
 
 # This will save your most recent plot
-showtext_opts(dpi = 320) 
+showtext_opts(dpi = 370) 
 
-ggsave('Oregon_Frog.png',path = here::here('2022/2022-08-02-Week-31'),width = 17,height = 12,dpi = 320)
+ggsave('Oregon_Frog.png',path = here::here('2022/2022-08-02-Week-31'),width = 8,height = 8,dpi = 370)
 
 showtext_auto(FALSE)
 
