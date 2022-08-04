@@ -28,7 +28,7 @@ Repository for my TidyTuesday data visualizations. TidyTuesday is a weekly data 
 <h1 align="center"> Oregon Frogs </h1>
 
   <p align="center">
-    <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-08-02-Week-31/Oregon_Frog.png?raw=true" width="80%">
+    <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-08-02-Week-31/Oregon_Frog.png?raw=true" width="70%">
       </p>
 
 
