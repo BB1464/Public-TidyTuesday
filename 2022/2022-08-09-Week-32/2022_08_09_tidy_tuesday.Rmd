@@ -101,9 +101,9 @@ labs(y='Type of Wheel',x='Height of Wheel',title = 'Height of the different Type
   theme_minimal()+
   theme(
     panel.grid = element_blank(),
-    axis.title.x  = element_text(size=16, color=txt_col, margin = margin(10,0,0,0)),
-    axis.title.y  = element_text(size=16, color=txt_col, margin = margin(10,0,0,0)),
-    axis.text.x = element_text(size=12, color=txt_col),
+    axis.title.x  = element_text(size=18, color=txt_col, margin = margin(10,0,0,0)),
+    axis.title.y  = element_text(size=18, color=txt_col, margin = margin(10,0,0,0)),
+    axis.text.x = element_text(size=20, color=txt_col),
     axis.text.y = element_text(size=20, color=txt_col),
     plot.title = element_text(size=32, color=txt_col, hjust=.5, face="bold", margin=margin(0,0,30,0)),
     plot.caption = element_text(hjust=.5, margin=margin(20,0,0,0), size=14, color=txt_col, face="bold"),
