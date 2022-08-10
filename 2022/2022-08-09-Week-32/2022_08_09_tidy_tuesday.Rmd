@@ -21,6 +21,7 @@ library(tidytuesdayR)
 library(MetBrewer)
 library(showtext)
 library(ggtext)
+library(cowplot)
 ```
 
 # Load the weekly Data
@@ -62,8 +63,15 @@ tt %>%
 Explore the data and process it into a nice format for plotting! Access each dataset by name by using a dollarsign after the `tt` object and then the name of the data set.
 
 ```{r Wrangle}
+wheels <- tt$wheels
 
-
+wheels_raw <- wheels |> 
+  select(height,country,status,type) |> 
+  drop_na(height,type) |> 
+  group_by(type) |> 
+  mutate(mean_height=mean(height)) |> 
+  arrange(desc(mean_height)) |> 
+  mutate(type_of_wheel=fct_reorder(.f = type,.x = mean_height,.desc = FALSE))
 
 ```
 
@@ -73,8 +81,11 @@ Explore the data and process it into a nice format for plotting! Access each dat
 Using your processed dataset, create your unique visualization.
 
 ```{r Visualize}
-
-
+ggplot(data = wheels_raw,aes(x = mean_height,y=fct_reorder(.f = type,.x = mean_height,.fun = 'mean',.desc=FALSE)))+
+geom_segment(aes(yend=type_of_wheel),xend=0,size=.9)+
+geom_point(size=6,col='#456769')+coord_flip()+
+scale_x_continuous(limits = c(0,400),expand = c(0,0))+
+labs(y='Type of Wheel',x='Height of Wheel')
   
 ```
 
