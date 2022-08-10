@@ -18,7 +18,7 @@ Repository for my TidyTuesday data visualizations. TidyTuesday is a weekly data 
       </p>
 
 
-<h1 align="center"> 20 Most Crossword Puzzle Definition </h1>
+<h1 align="center"> Week 28 Euro Control </h1>
 
   <p align="center">
     <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-07-12-Week-28/EuroControl.png?raw=true" width="60%">
