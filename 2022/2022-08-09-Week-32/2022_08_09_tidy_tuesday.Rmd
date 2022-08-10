@@ -58,6 +58,18 @@ tt %>%
 
 ```
 
+```{r}
+# Misc
+font <- "Abel"
+font_add_google(family=font, font)
+showtext_auto(enable = TRUE) 
+theme_set(theme_minimal(base_family = font))
+bg <- "grey85"
+txt_col <- "black"
+
+```
+
+
 # Wrangle
 
 Explore the data and process it into a nice format for plotting! Access each dataset by name by using a dollarsign after the `tt` object and then the name of the data set.
@@ -83,9 +95,23 @@ Using your processed dataset, create your unique visualization.
 ```{r Visualize}
 ggplot(data = wheels_raw,aes(x = mean_height,y=fct_reorder(.f = type,.x = mean_height,.fun = 'mean',.desc=FALSE)))+
 geom_segment(aes(yend=type_of_wheel),xend=0,size=.9)+
-geom_point(size=6,col='#456769')+coord_flip()+
+geom_point(size=8,col='#456769')+coord_flip()+
 scale_x_continuous(limits = c(0,400),expand = c(0,0))+
-labs(y='Type of Wheel',x='Height of Wheel')
+labs(y='Type of Wheel',x='Height of Wheel',title = 'Height of the different Type of Ferris Wheels',caption = "Oluwafemi Oyedele | #TidyTuesday Week 32 | Data: @Emil Hvitfeldt ferriswheels")+
+  theme_minimal()+
+  theme(
+    panel.grid = element_blank(),
+    axis.title.x  = element_text(size=16, color=txt_col, margin = margin(10,0,0,0)),
+    axis.title.y  = element_text(size=16, color=txt_col, margin = margin(10,0,0,0)),
+    axis.text.x = element_text(size=12, color=txt_col),
+    axis.text.y = element_text(size=20, color=txt_col),
+    plot.title = element_text(size=32, color=txt_col, hjust=.5, face="bold", margin=margin(0,0,30,0)),
+    plot.caption = element_text(hjust=.5, margin=margin(20,0,0,0), size=14, color=txt_col, face="bold"),
+    plot.background = element_rect(color=bg, fill=bg),
+    plot.title.position = "panel",
+    plot.margin = margin(30,30,30,30),axis.line.x = element_line(),axis.line.y = element_line(),axis.ticks.y = element_line(size = 1)
+    )
+
   
 ```
 
@@ -96,8 +122,17 @@ Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your p
 ```{r}
 
 # This will save your most recent plot
-ggsave(
-  filename = "My TidyTuesday Plot.png",
-  device = "png")
+# Save
+showtext_opts(dpi = 320) 
 
+ggsave("ferriswheels.png",
+       height = 12,
+       width = 12,
+       dpi=320,
+      path=here::here('2022/2022-08-09-Week-32')
+       
+)  
+
+showtext_auto(FALSE)
+  
 ```
