@@ -41,11 +41,11 @@ Repository for my TidyTuesday data visualizations. TidyTuesday is a weekly data 
       </p>
 
 
-# <h1 align="center"> Week 33: Futura Characters Personalities </h1>
-# 
-#   <p align="center">
-#     <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-08-16-Week-33/2022_33.png?raw=true" width="60%">
-#       </p>
+<h1 align="center"> Week 33: Futura Characters Personalities </h1>
+
+  <p align="center">
+    <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-08-16-Week-33/2022_33.png?raw=true" width="60%">
+      </p>
 
 
 
