@@ -146,10 +146,13 @@ labs(x = "Release Date",y='Number of Transistors',
 Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your post on twitter! 
 
 ```{r}
+showtext_opts(dpi = 320) 
 
 # This will save your most recent plot
 ggsave(
-  filename = "My TidyTuesday Plot.png",
-  device = "png")
+  filename = "Chips.png",
+  device = "png",path = here::here('2022/2022-08-23-Week-34'),width = 8,height = 8,dpi = 270)
 
+
+showtext_auto(FALSE)
 ```
