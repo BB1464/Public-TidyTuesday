@@ -49,6 +49,17 @@ Repository for my TidyTuesday data visualizations. TidyTuesday is a weekly data 
 
 
 
+<h1 align="center"> Week 34: Chips Dataset </h1>
+
+  <p align="center">
+    <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-08-23-Week-34/Chips.png?raw=true" width="60%">
+      </p>
+
+
+
+
+
+
 
 
 
