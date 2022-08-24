@@ -18,6 +18,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(tidytuesdayR)
+library(MetBrewer)
+library(showtext)
+library(lubridate)
+library(here)
 
 ```
 
@@ -59,10 +63,58 @@ tt %>%
 
 Explore the data and process it into a nice format for plotting! Access each dataset by name by using a dollarsign after the `tt` object and then the name of the data set.
 
+
+```{r}
+#### Formatting ####
+
+# Font
+font_add_google(name = "Montserrat")
+showtext_auto()
+
+# Theme Setup
+font <- "Montserrat"
+font_color <- "#1A1A1A" # gray
+line_color <- "#666666" # lighter gray
+bcolor <- "#e9eff4"
+
+theme_set(theme_minimal(base_size = 12, base_family = font))
+```
+
+# Update the Theme
+```{r}
+theme_update(
+  panel.grid.minor = element_blank(),
+  panel.grid.major = element_blank(),
+  
+  panel.background = element_rect(fill = bcolor, color = NA),
+  plot.background = element_rect(fill = bcolor, color = NA),
+  
+  axis.title = element_text(size = 26, color = font_color),
+  axis.text = element_text(size = 24, color = font_color),
+  axis.ticks = element_line(color = line_color),
+  axis.line = element_line(color = line_color),
+  
+  strip.text = element_text(size = 24, color = font_color, hjust = 0),
+  
+  legend.text = element_text(size = 24, color = font_color),
+  legend.title = element_text(size = 24, color = font_color),
+  
+  plot.title.position = "plot",
+  plot.title = element_text(size = 40, color = font_color, lineheight = 0.3, hjust = 0.5),
+  
+  plot.subtitle = element_text(size = 24, color = font_color, lineheight = 0.3),
+  
+  plot.caption.position = "plot",
+  plot.caption = element_text(size = 14, color = font_color, hjust = 1)
+)
+
+```
+
+
 ```{r Wrangle}
+chips <- tt$chips
 
-
-
+chips <- chips |> drop_na(year) |> group_by(year) 
 ```
 
 
@@ -71,9 +123,22 @@ Explore the data and process it into a nice format for plotting! Access each dat
 Using your processed dataset, create your unique visualization.
 
 ```{r Visualize}
-
-
-  
+chips|> drop_na() |> 
+  ggplot(aes(x = year,y = transistors_million,col=year),alpha=0.5)+
+geom_jitter(size=5)+
+scale_color_gradient2(guide = 'none')+
+geom_smooth(col='red',size=1)+scale_y_continuous(labels = scales::label_dollar(),limits = c(0,18000))+
+scale_x_continuous(breaks =seq(2000,2021,5))+
+labs(x = "Release Date",y='Number of Transistors',
+       title = "Number of Transistors over time",
+       subtitle =  "",
+         caption = "\nData {CHIP Dataset} | Design Oluwafemi Oyedele") +
+  theme(plot.margin = margin(25, 25, 25, 25),
+        axis.line.y = element_line(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_text(),
+        axis.text.y = element_text(),
+        axis.ticks.y.left = element_line(size = 1))
 ```
 
 # Save Image
