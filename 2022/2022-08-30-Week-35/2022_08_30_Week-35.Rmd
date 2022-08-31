@@ -6,6 +6,7 @@ output: html_document
 
 # TidyTuesday
 
+
 Join the R4DS Online Learning Community in the weekly #TidyTuesday event!
 Every week we post a raw dataset, a chart or article related to that dataset, and ask you to explore the data.
 While the dataset will be “tamed”, it will not always be tidy! As such you might need to apply various R for Data Science techniques to wrangle the data into a true tidy format.
