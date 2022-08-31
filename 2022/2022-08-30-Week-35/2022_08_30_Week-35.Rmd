@@ -61,7 +61,9 @@ tt %>%
 Explore the data and process it into a nice format for plotting! Access each dataset by name by using a dollarsign after the `tt` object and then the name of the data set.
 
 ```{r Wrangle}
+pell <- tt$pell
 
+ggplot(data = pell,aes(x = YEAR,y = AWARD,group=STATE))+geom_line()
 
 
 ```
