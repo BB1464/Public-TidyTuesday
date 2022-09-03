@@ -16,10 +16,14 @@ As such we encourage everyone of all skills to participate!
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = TRUE)
-
 library(tidyverse)
+library(pell)
+library(geofacet)
+library(gghighlight)
+library(ggtext)
+library(showtext)
 library(tidytuesdayR)
-
+library(sysfonts)
 ```
 
 # Load the weekly Data
@@ -28,8 +32,21 @@ Download the weekly data and make available in the `tt` object.
 
 ```{r Load}
 
-tt <- tt_load("2022-08-30")
+#tt <- tt_load("2022-08-30")
 
+data(pell)
+```
+
+
+
+```{r}
+# Aes
+showtext_auto()
+font_add_google("Advent Pro")
+font <- "Advent Pro"
+
+colour <- c("#381C00", "#a9dbf5", "#B31B1B", "#00693e",
+             "#A51C30")
 ```
 
 
@@ -51,7 +68,7 @@ Take an initial look at the format of the data available.
 
 ```{r Glimpse}
 
-tt %>% 
+pell %>% 
   map(glimpse)
 
 ```
@@ -61,10 +78,11 @@ tt %>%
 Explore the data and process it into a nice format for plotting! Access each dataset by name by using a dollarsign after the `tt` object and then the name of the data set.
 
 ```{r Wrangle}
-pell <- tt$pell
-
-ggplot(data = pell,aes(x = YEAR,y = AWARD,group=STATE))+geom_line()
-
+pell_clean <- pell |>
+  group_by(STATE,YEAR) |>
+  summarise(Award=sum(AWARD,na.rm = TRUE),.groups = 'drop') |>
+  arrange(desc(Award)) |>
+  ungroup()
 
 ```
 
@@ -75,19 +93,38 @@ Using your processed dataset, create your unique visualization.
 
 ```{r Visualize}
 
+ggplot(data = pell_clean,aes(x = YEAR,y = Award,col=STATE))+
+  geom_line(size=1.2)+
+  scale_y_continuous(labels = scales::dollar_format(scale = 0.001, suffix = "K",trim = TRUE))+
+  gghighlight(max(Award)>2e+09,use_direct_label = TRUE,unhighlighted_params = list(colour='gray60'))+
+  scale_color_manual(values = c(CA="#381C00",TX= "#f58025",FL="#B31B1B",NY="#00693e",AZ="#00356B"))+
+  ggtitle("Pell Grants Award to Students in US",
+  subtitle = paste0(
+"Plot shows that <span style = 'color:#381C00'>**California**</span>","; <span style = 'color:#F58025'>**Texas**</span>",
+            "; <span style = 'color:#B31b1B'>**Florida**</span>",
+            "; <span style = 'color:#00693e'>**New York**</span>",
+            " and  <span style = 'color:#00356B'>**Arizonia**</span>",
+            " Awarded the highest pell grants to student in United State from 2014 to 2017"))+labs(y="", x="", size = "Number of Recipients", caption = "Designer: Oluwafemi | Source: U.S. Department of Education | Twitter: OluwafemOyedele") +
+   theme(plot.title = element_text(size=40, face="bold", hjust=0.5, family=font, color = "#202A44"),plot.caption = element_text(hjust=0.5, family=font, face="bold", size=25, vjust=1, color = "#202A44"),plot.background = element_rect(fill="#f5eee3"),panel.background = element_blank(),
+         panel.grid.major = element_line(color="grey65", size=1, linetype = "dashed"),panel.grid.minor = element_blank(),
+         panel.spacing = unit(4, "lines"),axis.text.x = element_text(size=21, family=font, face="bold", color = "#202A44"),
+         axis.text.y = element_text(size=18, family=font, face="bold", color = "#202A44"),plot.subtitle = element_markdown(size = 18))
 
-  
 ```
+
 
 # Save Image
 
 Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your post on twitter! 
 
 ```{r}
+showtext_opts(dpi = 320) 
 
 # This will save your most recent plot
 ggsave(
-  filename = "My TidyTuesday Plot.png",
-  device = "png")
+  'Pell_Plot.png',path = here::here('2022/2022-08-30-Week-35'),width = 18,height = 14,dpi = 320)
 
+
+
+showtext_auto(FALSE)
 ```
