@@ -94,9 +94,9 @@ Using your processed dataset, create your unique visualization.
 ```{r Visualize}
 
 ggplot(data = pell_clean,aes(x = YEAR,y = Award,col=STATE))+
-  geom_line(size=1.2)+
+  geom_line(size=1.5)+
   scale_y_continuous(labels = scales::dollar_format(scale = 0.001, suffix = "K",trim = TRUE))+
-  gghighlight(max(Award)>2e+09,use_direct_label = TRUE,unhighlighted_params = list(colour='gray60'))+
+  gghighlight(max(Award)>2e+09,use_direct_label = TRUE,unhighlighted_params = list(colour='gray60'),label_params = list(size=15))+
   scale_color_manual(values = c(CA="#381C00",TX= "#f58025",FL="#B31B1B",NY="#00693e",AZ="#00356B"))+
   ggtitle("Pell Grants Award to Students in US",
   subtitle = paste0(
