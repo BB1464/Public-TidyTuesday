@@ -56,11 +56,17 @@ Repository for my TidyTuesday data visualizations. TidyTuesday is a weekly data 
       </p>
 
 
-
 <h1 align="center"> Week 35: Pells Dataset </h1>
 
   <p align="center">
     <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-08-30-Week-35/Pell_Plot.png?raw=true" width="60%">
+      </p>
+
+
+<h1 align="center"> Week 35: Pells Dataset </h1>
+
+  <p align="center">
+    <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-09-06-Week-36/Logo.png" width="60%">
       </p>
 
 
