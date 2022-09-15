@@ -18,15 +18,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(tidytuesdayR)
-library(MetBrewer)
 library(showtext)
 library(ggtext)
 library(ggthemes)
 library(ggdark)
-library(USAboundaries)
-library(png)
 library(cowplot)
-library(patchwork)
 ```
 
 # Load the weekly Data
@@ -102,7 +98,7 @@ ggplot(aes(x = longitude,y = latitude))+
   coord_map()+
   theme_map()+
   dark_mode()+
-  theme(panel.grid = element_blank(),axis.text = element_blank(),axis.title = element_blank(),axis.ticks = element_blank(),panel.background = element_blank(),plot.title = element_text(size=35, face="bold", hjust=0.5, family=font, color = "#202A44"),plot.caption = element_text(hjust=0.5, family=font, face="bold", size=25, vjust=1, color = "#202A44"))
+  theme(panel.grid = element_blank(),axis.text = element_blank(),axis.title = element_blank(),axis.ticks = element_blank(),panel.background = element_blank(),plot.title = element_text(size=32, face="bold", hjust=0.5, family=font, color = "#202A44"),plot.caption = element_text(hjust=0.5, family=font, face="bold", size=19, vjust=1, color = "#202A44"))
 
 ```
 
