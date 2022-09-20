@@ -1,0 +1,142 @@
+---
+title: "TidyTemplate"
+date: 2022-09-20
+output: html_document
+---
+
+# TidyTuesday
+
+Join the R4DS Online Learning Community in the weekly #TidyTuesday event!
+Every week we post a raw dataset, a chart or article related to that dataset, and ask you to explore the data.
+While the dataset will be “tamed”, it will not always be tidy! As such you might need to apply various R for Data Science techniques to wrangle the data into a true tidy format.
+The goal of TidyTuesday is to apply your R skills, get feedback, explore other’s work, and connect with the greater #RStats community!
+As such we encourage everyone of all skills to participate!
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(sf)
+library(rnaturalearth)
+library(ggtext)
+library(showtext)
+library(glue)
+showtext_opts(dpi = 300)
+showtext_auto(enable = TRUE)
+```
+
+# Font
+```{r}
+font_add_google("Barlow")
+f1 = "Barlow"
+font_add_google("Inter")
+f2 = "Inter"
+```
+
+
+# Load the weekly Data
+
+Download the weekly data and make available in the `tt` object.
+
+```{r Load}
+
+tt <- tt_load("2022-09-20")
+
+```
+
+
+# Readme
+
+Take a look at the readme for the weekly data to get insight on the dataset.
+This includes a data dictionary, source, and a link to an article on the data.
+
+```{r Readme, eval = interactive()}
+
+tt
+
+```
+
+
+# Glimpse Data
+
+Take an initial look at the format of the data available.
+
+```{r Glimpse}
+
+tt %>% 
+  map(glimpse)
+
+```
+
+# Wrangle
+
+Explore the data and process it into a nice format for plotting! Access each dataset by name by using a dollarsign after the `tt` object and then the name of the data set.
+
+
+```{r}
+# Convert to sf and transfrom to MollWeide Projection
+
+sf_use_s2(FALSE) #reference: https://github.com/r-spatial/sf/issues/1856
+
+plants_sf = st_as_sf(x=waste, coords=c("LON_WWTP","LAT_WWTP"), crs="+proj=longlat +datum=WGS84") %>%
+st_transform(crs="+proj=moll +lon_0=0 +x_0=0 +y_0=0")
+plants2_sf = st_as_sf(x=waste, coords=c("LON_WWTP","LAT_WWTP"), crs="+proj=longlat +datum=WGS84") %>%st_transform(crs="+proj=moll +lon_0=0 +x_0=0 +y_0=0")
+```
+
+
+```{r Wrangle}
+# Check bbox 
+st_bbox(plants_sf)
+st_bbox(plants2_sf)
+# get world map and transfrom to MollWeide Projection 
+base = rnaturalearth::ne_countries(return="sf") %>% st_transform(crs="+proj=moll +lon_0=0 +x_0=0 +y_0=0") #  MollWeide Projection
+```
+
+```{r}
+# CAPTION
+caption_text  <- str_glue("Oluwafemi | #TidyTuesday Week 38 | Data: Macedo et al., 2022/BFRO<br>",
+"<span style='font-family: \"fa-brands\"'>&#xf09b;</span> Oluwafemi ",
+"<span style='font-family: \"fa-brands\"'>&#xf099;</span> Oluwafemi")
+
+```
+
+# Visualize
+
+Using your processed dataset, create your unique visualization.
+
+```{r Visualize}
+ggplot() +
+  geom_sf(data=base, size=.3, fill="#222233", color="#333344") +
+  geom_sf(data=plants2_sf, size=1, shape=21, fill="#4C7C86", stroke=.1, color="#333344") +
+  geom_sf(data=plants_sf, aes(fill=DF), size=1.5, shape=21, stroke=.1, color="#333344") +
+  coord_sf(x=c(-10680466, 15361372), ylim=c(-5583376,7732762)) +
+  scale_fill_stepsn(name="Dilution Factor:",colours = viridis::rocket(n = 5, begin = 0.5, end = 1), breaks=seq(0,10,2)) +
+  cowplot::theme_map() +
+  theme(text=element_text(family=f1, color="white"),
+        legend.position = "top",
+        legend.title=element_text(size=12.5),
+        legend.text=element_text(size=11.5),
+        plot.background=element_rect(fill="#333344", color=NA),
+        plot.title=element_markdown(face="plain", size=15.8, lineheight=1.2, margin=margin(b=15)),
+        plot.caption=element_markdown(family=f2, color="#CCCCDD",hjust=0, size=9.5, margin=margin(t=15)),
+        plot.margin=margin(.5,.5,.5,.5,unit="cm")) +
+  labs(title="**2,533** out of **58,502** <span style='color:#70a3ae'><b>wastewater treatment plants</b></span> show a dilution factor of less than 10,<br>which represents a common threshold for **environmental concern**",
+       caption=caption_text) +
+  guides(fill=guide_colorsteps(barwidth = unit(7, "lines"), barheight = unit(.6, "lines")))
+  
+  
+```
+
+# Save Image
+
+Save your image for sharing. Be sure to use the `#TidyTuesday` hashtag in your post on twitter! 
+
+```{r}
+
+# This will save your most recent plot
+ggsave(
+  'Waste.png',path = here::here('2022/2022-09-20-Week-38'),width = 9.75,height = 7,bg='white')
+
+
+```
