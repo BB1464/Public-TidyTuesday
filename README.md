@@ -2,6 +2,14 @@
 Repository for my TidyTuesday data visualizations. TidyTuesday is a weekly data project aimed at the R ecosystem, an emphasis was placed on understanding how to summarize and arrange data to make meaningful charts with ggplot2, tidyr, dplyr and other tools in the tidyverse ecosystem. These repository contains all my contributions.
 
 
+
+<h1 align="center"> Week 39: US Artist </h1>
+
+  <p align="center">
+    <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-09-27-Week-39/Artist.png" width="60%">
+      </p>
+
+
 <h1 align="center"> Week 38: Waste water Plants </h1>
 
   <p align="center">
