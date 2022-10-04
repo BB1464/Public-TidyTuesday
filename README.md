@@ -3,6 +3,15 @@ Repository for my TidyTuesday data visualizations. TidyTuesday is a weekly data 
 
 
 
+<h1 align="center"> Week 39: **Product Hunt** </h1>
+
+  <p align="center">
+    <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-10-04-Week-40/Product_hunt.png" width="60%">
+      </p>
+
+
+
+
 <h1 align="center"> Week 39: US Artist </h1>
 
   <p align="center">
