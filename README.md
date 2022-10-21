@@ -3,6 +3,16 @@ Repository for my TidyTuesday data visualizations. TidyTuesday is a weekly data 
 
 
 
+<h1 align="center"> Week 42: Stranger Things!!! </h1>
+
+  <p align="center">
+    <img src="https://github.com/BB1464/Public-TidyTuesday/blob/master/2022/2022-10-21-Week-42/Episode.png" width="60%">
+      </p>
+
+
+
+
+
 <h1 align="center"> Week 41: Yarn </h1>
 
   <p align="center">
