@@ -18,7 +18,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(tidytuesdayR)
-
+library(showtext)
+library(tidytext)
+library(MetBrewer)
+library(tidylo)
 ```
 
 # Load the weekly Data
@@ -28,6 +31,36 @@ Download the weekly data and make available in the `tt` object.
 ```{r Load}
 
 tt <- tt_load("2022-10-18")
+
+```
+## Import the dataset
+```{r}
+episodes <- tt$stranger_things_all_dialogue
+```
+
+## Font
+```{r}
+showtext_opts(dpi = 300)
+showtext_auto(enable = TRUE)
+
+
+## Load the google font
+
+font_add_google("JetBrains Mono")
+font_add_google("Eczar","ec", bold.wt = 600)
+font_add_google("Open Sans")
+font_add_google("Open Sans","os",bold.wt = 600)
+
+
+```
+```{r}
+font_add_google("Barlow")
+f1 = "Barlow"
+font_add_google("Inter")
+f2 = "Inter"
+
+fa_path <- systemfonts::font_info(family = "Font Awesome 6 Brands")[["path"]]
+font_add(family = "fa-brands", regular = fa_path)
 
 ```
 
@@ -60,6 +93,22 @@ tt %>%
 Explore the data and process it into a nice format for plotting! Access each dataset by name by using a dollarsign after the `tt` object and then the name of the data set.
 
 ```{r Wrangle}
+dialogue <-
+  episodes %>%
+  filter(!is.na(dialogue)) %>%
+  mutate(season = paste0("season", season))
+
+dialogue
+
+
+tidy_dialogue <-
+  dialogue %>%
+  unnest_tokens(word, dialogue)
+
+tidy_dialogue
+
+
+
 
 
 
@@ -71,8 +120,22 @@ Explore the data and process it into a nice format for plotting! Access each dat
 Using your processed dataset, create your unique visualization.
 
 ```{r Visualize}
-
-
+tidy_dialogue %>%
+count(season, word, sort = TRUE) %>%
+bind_log_odds(season, word, n) %>%
+filter(n > 20) %>%
+group_by(season) %>%
+slice_max(log_odds_weighted, n = 10) %>%
+mutate(word = reorder_within(word, log_odds_weighted, season))%>%
+ggplot(aes(log_odds_weighted, word, fill = season)) +
+geom_col(show.legend = FALSE) +
+facet_wrap(vars(season), scales = "free") +
+scale_y_reordered() +
+labs(y = NULL)+
+scale_fill_met_d(name = 'Morgenstern')+
+scale_x_continuous(expand = expansion(mult = c(0,0),add = c(0,0.2)))+
+theme(text = element_text(family = f1,face = 'bold',size = 15))
+  
   
 ```
 
