@@ -5,7 +5,6 @@ format: html
 editor: visual
 ---
 
-
     #### Libraries ####
 
 ```{r}
@@ -21,7 +20,6 @@ library(colorspace)
 
 ```
 
-
     #### Get the Data ####
 
 ```{r}
@@ -30,7 +28,7 @@ yarn <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidyt
 
 ```
 
-## fonts and palettes 
+## fonts and palettes
 
 ```{r}
 
@@ -90,8 +88,6 @@ df_yarn <- map_dfr(1:nrow(df_base), ~{
   arrange(yarn_company_name, id)
 ```
 
-
-
 ## Title
 
 ```{r}
@@ -103,11 +99,6 @@ caption <- str_wrap(glue(
   Code: {github} BB1464/tidytuesday #rstats #tidytuesday"),
   1000)
 ```
-
-```{}
-```
-
-
 
     #### Plot ####
 
@@ -148,7 +139,6 @@ df_yarn |>
   )
 ```
 
-
     #### Save ####
 
 ```{r}
@@ -160,4 +150,3 @@ ggsave(
 ```
 
 \
-
