@@ -55,9 +55,9 @@ ggplot(plot_data, aes(area = n, fill = rating, label = country_of_bean_origin)) 
                       labels=c("<--\nLower rating", "-->\nHigher rating"),
                       guide = guide_colourbar(title.position = "top")) +
   labs(title = "Where do cocoa beans come from?",
-       subtitle = "\nCocoa beans from countries which are used by a larger number of manufacturers tend to result in higher rated\nchocolate. The exception is blended beans which are commonly used but score lower. \n\n Oluwafemi Oyedele | Data: Flavors of Cocoa\n\n") +
+       subtitle = "\nCocoa beans from countries which are used by a larger number of manufacturers tend to result in higher rated\nchocolate. The exception is blended beans which are commonly used but score lower. \n",caption = 'Oluwafemi Oyedele | Data: Flavors of Cocoa') +
   theme_void() +
-  theme(plot.background = element_rect(fill = "#452d28", colour="#452d28"),panel.background = element_rect(fill = "#452d28", colour="#452d28"),plot.title = element_text(colour = 'red', family="Fira Sans", face = "bold", size=80),plot.subtitle = element_text(colour = '#b29e97', family="Fira Sans", size=30),legend.text = element_text(colour = '#b29e97', family="Fira Sans", size=23),
+  theme(plot.background = element_rect(fill = "#452d28", colour="#452d28"),panel.background = element_rect(fill = "#452d28", colour="#452d28"),plot.title = element_text(colour = 'red', family="Fira Sans", face = "bold", size=130),plot.subtitle = element_text(colour = '#b29e97', family="Fira Sans", size=43),legend.text = element_text(colour = '#b29e97', family="Fira Sans", size=23),
         legend.title = element_text(colour = '#b29e97', family="Fira Sans", size=15),    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),legend.position = 'bottom',plot.caption = element_text(colour = '#b29e97', family="Fira Sans", size=40))
 
 
@@ -67,6 +67,6 @@ ggplot(plot_data, aes(area = n, fill = rating, label = country_of_bean_origin)) 
 # Save the Plot -----------------------------------------------------------
 
 
-ggsave("chocolate.png", plot = last_plot(), bg = "#ffffff", width = 11, height = 10, dpi = 200,path = here::here('2023/2023-01-05-Week-01'))
+ggsave("chocolate.png", plot = last_plot(), bg = "#ffffff", width = 15, height = 10, dpi = 200,path = here::here('2023/2023-01-05-Week-01'))
 
 
