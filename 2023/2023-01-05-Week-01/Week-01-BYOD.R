@@ -12,6 +12,7 @@ library(treemapify)
 library(showtext)
 library(ggsci)
 library(camcorder)
+library(ggtext)
 
 ## Record Plot
 
@@ -27,7 +28,7 @@ chocolate <- read_csv('Data/2023_chocolate.csv')
 
 font_add_google(name = "Fira Sans", family = "Fira Sans")
 
-showtext_auto(enable = TRUE,dpi=320)
+showtext_auto(enable = TRUE)
 
 # prep data
 plot_data <- chocolate %>%
@@ -49,7 +50,7 @@ ggplot(plot_data, aes(area = n, fill = rating, label = country_of_bean_origin)) 
                     grow = TRUE,
                     padding.x = grid::unit(4, "mm"),
                     padding.y = grid::unit(4, "mm")) +
-  scale_fill_material(palette="brown", name="",
+  scale_fill_material(palette="deep-orange", name="",
                       limits=c(2.8, 3.6),
                       breaks=c(2.8, 3.6),
                       labels=c("<--\nLower rating", "-->\nHigher rating"),
@@ -57,8 +58,8 @@ ggplot(plot_data, aes(area = n, fill = rating, label = country_of_bean_origin)) 
   labs(title = "Where do cocoa beans come from?",
        subtitle = "\nCocoa beans from countries which are used by a larger number of manufacturers tend to result in higher rated\nchocolate. The exception is blended beans which are commonly used but score lower. \n",caption = 'Oluwafemi Oyedele | Data: Flavors of Cocoa') +
   theme_void() +
-  theme(plot.background = element_rect(fill = "#452d28", colour="#452d28"),panel.background = element_rect(fill = "#452d28", colour="#452d28"),plot.title = element_text(colour = 'red', family="Fira Sans", face = "bold", size=130),plot.subtitle = element_text(colour = '#b29e97', family="Fira Sans", size=43),legend.text = element_text(colour = '#b29e97', family="Fira Sans", size=23),
-        legend.title = element_text(colour = '#b29e97', family="Fira Sans", size=15),    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),legend.position = 'bottom',plot.caption = element_text(colour = '#b29e97', family="Fira Sans", size=40))
+  theme(plot.background = element_rect(fill = "#fafafa", colour="#452d28"),panel.background = element_rect(fill = "#fafafa", colour="#452d28"),plot.title = element_text(colour = 'red', family="Fira Sans", face = "bold", size=130),plot.subtitle = element_text(colour = '#b29e97', family="Fira Sans", size=43),legend.text = element_text(colour = 'black', family="Fira Sans", size=26),
+        legend.title = element_text(colour = '#b29e97', family="Fira Sans", size=15),    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),legend.position = 'bottom',plot.caption = element_text(colour = 'black', family="Fira Sans", size=40))
 
 
 
