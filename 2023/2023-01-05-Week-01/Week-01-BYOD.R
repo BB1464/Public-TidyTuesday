@@ -58,7 +58,7 @@ ggplot(plot_data, aes(area = n, fill = rating, label = country_of_bean_origin)) 
   labs(title = "Where do cocoa beans come from?",
        subtitle = "\nCocoa beans from countries which are used by a larger number of manufacturers tend to result in higher rated\nchocolate. The exception is blended beans which are commonly used but score lower. \n",caption = 'Oluwafemi Oyedele | Data: Flavors of Cocoa') +
   theme_void() +
-  theme(plot.background = element_rect(fill = "#fafafa", colour="#452d28"),panel.background = element_rect(fill = "#fafafa", colour="#452d28"),plot.title = element_text(colour = 'red', family="Fira Sans", face = "bold", size=130),plot.subtitle = element_text(colour = '#b29e97', family="Fira Sans", size=43),legend.text = element_text(colour = 'black', family="Fira Sans", size=26),
+  theme(plot.background = element_rect(fill = "gray97", colour="#452d28"),panel.background = element_rect(fill = "gray97", colour="#452d28"),plot.title = element_text(colour = 'red', family="Fira Sans", face = "bold", size=130),plot.subtitle = element_text(colour = '#b29e97', family="Fira Sans", size=43,face = 'bold'),legend.text = element_text(colour = 'black', family="Fira Sans", size=26),
         legend.title = element_text(colour = '#b29e97', family="Fira Sans", size=15),    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),legend.position = 'bottom',plot.caption = element_text(colour = 'black', family="Fira Sans", size=40))
 
 
