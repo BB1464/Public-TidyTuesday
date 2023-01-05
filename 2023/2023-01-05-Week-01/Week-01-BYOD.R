@@ -11,6 +11,11 @@ library(tidyverse)
 library(treemapify)
 library(showtext)
 library(ggsci)
+library(camcorder)
+
+## Record Plot
+
+gg_record(dir = "temp", device = "png", width = 10, height = 8, units = "in", dpi = 320)
 
 
 # Import the dataset ------------------------------------------------------
@@ -22,7 +27,7 @@ chocolate <- read_csv('Data/2023_chocolate.csv')
 
 font_add_google(name = "Fira Sans", family = "Fira Sans")
 
-showtext_auto()
+showtext_auto(enable = TRUE,dpi=320)
 
 # prep data
 plot_data <- chocolate %>%
@@ -49,14 +54,19 @@ ggplot(plot_data, aes(area = n, fill = rating, label = country_of_bean_origin)) 
                       breaks=c(2.8, 3.6),
                       labels=c("<--\nLower rating", "-->\nHigher rating"),
                       guide = guide_colourbar(title.position = "top")) +
-  labs(title = "Where do cacao beans come from?",
-       subtitle = "\nCacoa beans from countries which are used by a larger number of manufacturers tend to result in higher rated\nchocolate. The exception is blended beans which are commonly used but score lower. \n\n N. Rennie | Data: Flavors of Cacao\n\n") +
+  labs(title = "Where do cocoa beans come from?",
+       subtitle = "\nCocoa beans from countries which are used by a larger number of manufacturers tend to result in higher rated\nchocolate. The exception is blended beans which are commonly used but score lower. \n\n Oluwafemi Oyedele | Data: Flavors of Cocoa\n\n") +
   theme_void() +
-  theme(plot.background = element_rect(fill = "#452d28", colour="#452d28"),panel.background = element_rect(fill = "#452d28", colour="#452d28"),plot.title = element_text(colour = '#b29e97', family="Fira Sans", face = "bold", size=22),plot.subtitle = element_text(colour = '#b29e97', family="Fira Sans", size=14),legend.text = element_text(colour = '#b29e97', family="Fira Sans", size=12),
-        legend.title = element_text(colour = '#b29e97', family="Fira Sans", size=12),    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),legend.position = 'bottom')
+  theme(plot.background = element_rect(fill = "#452d28", colour="#452d28"),panel.background = element_rect(fill = "#452d28", colour="#452d28"),plot.title = element_text(colour = 'red', family="Fira Sans", face = "bold", size=80),plot.subtitle = element_text(colour = '#b29e97', family="Fira Sans", size=30),legend.text = element_text(colour = '#b29e97', family="Fira Sans", size=23),
+        legend.title = element_text(colour = '#b29e97', family="Fira Sans", size=15),    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),legend.position = 'bottom',plot.caption = element_text(colour = '#b29e97', family="Fira Sans", size=40))
 
 
 
 
+
+# Save the Plot -----------------------------------------------------------
+
+
+ggsave("chocolate.png", plot = last_plot(), bg = "#ffffff", width = 11, height = 10, dpi = 200,path = here::here('2023/2023-01-05-Week-01'))
 
 
