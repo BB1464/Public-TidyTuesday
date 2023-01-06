@@ -42,7 +42,7 @@ plot_data
 # treemap plot
 
 ggplot(plot_data, aes(area = n, fill = rating, label = country_of_bean_origin)) +
-  geom_treemap(colour = "#452d28") +
+  geom_treemap(colour = "#452d28",show.legend = FALSE) +
   geom_treemap_text(fontface = "italic",
                     family="Fira Sans",
                     colour = "#452d28",
@@ -56,9 +56,13 @@ ggplot(plot_data, aes(area = n, fill = rating, label = country_of_bean_origin)) 
                       labels=c("<--\nLower rating", "-->\nHigher rating"),
                       guide = guide_colourbar(title.position = "top")) +
   labs(title = "Where do cocoa beans come from?",
-       subtitle = "\nCocoa beans from countries which are used by a larger number of manufacturers tend to result in higher rated\nchocolate. The exception is blended beans which are commonly used but score lower. \n",caption = 'Oluwafemi Oyedele | Data: Flavors of Cocoa') +
+       subtitle = "<span style = 'font-size:43pt; font-family:Fira Sans;'>\nCocoa beans from countries which are used by a larger number of manufacturers tend to result in</span><br><span style = 'color:#fd541f;'>higher rated</span>chocolate.The exception is blended beans which are commonly used but<span style = 'color:#90432c;'> score lower.\n \n</span>",caption = '\nOluwafemi Oyedele | Data: Flavors of Cocoa')+
+
+
+
+       # subtitle = "\nCocoa beans from countries which are used by a larger number of manufacturers tend to result in higher rated\nchocolate. The exception is blended beans which are commonly used but score lower. \n",caption = 'Oluwafemi Oyedele | Data: Flavors of Cocoa') +
   theme_void() +
-  theme(plot.background = element_rect(fill = "gray97", colour="#452d28"),panel.background = element_rect(fill = "gray97", colour="#452d28"),plot.title = element_text(colour = 'red', family="Fira Sans", face = "bold", size=130),plot.subtitle = element_text(colour = '#b29e97', family="Fira Sans", size=43,face = 'bold'),legend.text = element_text(colour = 'black', family="Fira Sans", size=26),
+  theme(plot.background = element_rect(fill = "gray97", colour="#452d28"),panel.background = element_rect(fill = "gray97", colour="#452d28"),plot.title = element_text(colour = 'blue', family="Fira Sans", face = "bold", size=130),plot.subtitle = element_markdown(colour = '#b29e97', family="Fira Sans", size=43,face='bold'),legend.text = element_text(colour = 'black', family="Fira Sans", size=26),
         legend.title = element_text(colour = '#b29e97', family="Fira Sans", size=15),    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm"),legend.position = 'bottom',plot.caption = element_text(colour = 'black', family="Fira Sans", size=40))
 
 
