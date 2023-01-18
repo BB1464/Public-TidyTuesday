@@ -5,6 +5,7 @@ library(tidyverse)
 library(ggtext)
 library(showtext)
 library(camcorder)
+library(scico)
 library(tidytuesdayR)
 
 
@@ -71,14 +72,13 @@ fill = artist_nationality)) +
   geom_col() +
   geom_text(
     aes(label = perc),
-    hjust = 1, nudge_x = -.1,size=5.2,fontface='bold'
+    hjust = 1, nudge_x = -.1,size=5.7,fontface='bold'
   ) +
   ## reduce spacing between labels and bars
   scale_x_continuous(expand = c(.01, .01)) +
   scale_y_discrete(expand = expansion(mult = c(0,0),add = c(0,0)))+
   ## add custom colors
-  #scale_fill_manual(values = pal, guide = "none") +
-  scico::scale_fill_scico_d(palette = 'roma',guide='none')+
+  scale_fill_scico_d(palette = 'bilbao',guide='none')+
   labs(x='Total number of Atrtist',y='Artist Nationality',title = 'The majority of the Artists in 2020 are from American and France \n',caption ='Data: Art History | Design: @Oluwafemi Oyedele' )+
   theme_minimal()+
   theme(panel.grid.minor.x = element_line(linetype =
@@ -86,14 +86,14 @@ fill = artist_nationality)) +
   panel.grid.major.x = element_blank(),
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
- plot.background = element_rect(fill = '#453210'),
+ plot.background = element_rect(fill = '#19222B'),
  plot.title.position = 'plot',
- plot.title = element_text(family = font,face = 'bold',colour = 'white',hjust = 0.5,size=39),
- plot.caption = element_text(family = font,face = 'bold',colour = 'black',size = 21),
- axis.text.x = element_text(family = font,face = 'bold',colour = 'black',size = 20),
- axis.text.y = element_text(family = font,face = 'bold',colour = 'black',size = 20,hjust = 1),
- axis.title.x = element_text(family = font,face = 'bold',colour = 'black',size = 20),
- axis.title.y = element_text(family = font,face = 'bold',colour = 'black',size = 20),
+ plot.title = element_text(family = font,face = 'bold',colour = 'white',hjust = 0.5,size=41),
+ plot.caption = element_text(family = font,face = 'bold',colour = 'black',size = 29),
+ axis.text.x = element_text(family = font,face = 'bold',colour = 'black',size = 27),
+ axis.text.y = element_text(family = font,face = 'bold',colour = 'black',size = 27,hjust = 1),
+ axis.title.x = element_text(family = font,face = 'bold',colour = 'black',size = 27),
+ axis.title.y = element_text(family = font,face = 'bold',colour = 'black',size = 27),
  plot.margin = margin(rep(15, 4)))
 
 
