@@ -50,7 +50,7 @@ artists_clean <- artists |>
 ## Calculate the percentage of the Artist Nationality
 artists_clean_perc <- artists_clean %>%
   dplyr::mutate(
-    perc = scales::percent(n / sum(n), accuracy = .1, trim = FALSE),
+    perc = scales::percent(n / sum(n), accuracy = 1, trim = TRUE),
     ## customize label for the first category
     perc = if_else(row_number() == 1, paste(perc, "of all artist"), perc)
   )
@@ -72,7 +72,7 @@ fill = artist_nationality)) +
   geom_col() +
   geom_text(
     aes(label = perc),
-    hjust = 1, nudge_x = -.1,size=5.7,fontface='bold'
+    hjust = 1, nudge_x = -.1,size=9,fontface='bold',colour='blue'
   ) +
   ## reduce spacing between labels and bars
   scale_x_continuous(expand = c(.01, .01)) +
