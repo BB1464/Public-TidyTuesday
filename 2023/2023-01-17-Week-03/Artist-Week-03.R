@@ -15,6 +15,16 @@ artist <- tt_load(x = '2023-01-17')
 artists <- artist$artists
 
 
+# Add Google fonts --------------------------------------------------------
+
+font_add_google(name = 'Fira Sans',family = 'Fira Sans')
+
+font <- 'Fira Sans'
+
+showtext_auto(enable = TRUE)
+showtext_opts(dpi=320)
+
+
 # Data Wrangling ----------------------------------------------------------
 
 
@@ -61,13 +71,15 @@ fill = artist_nationality)) +
   geom_col() +
   geom_text(
     aes(label = perc),
-    hjust = 0.9, nudge_x = -.4
+    hjust = 1, nudge_x = -.1,size=5.2,fontface='bold'
   ) +
-  scale_x_continuous(expand = expansion(mult = c(0,0),add = c(0,1)))+
+  ## reduce spacing between labels and bars
+  scale_x_continuous(expand = c(.01, .01)) +
   scale_y_discrete(expand = expansion(mult = c(0,0),add = c(0,0)))+
   ## add custom colors
-  scale_fill_manual(values = pal, guide = "none") +
-  labs(x='Total number of Atrtist',y='Artist Nationality',title = 'The majority of the Artists are from American and France',caption ='Data: Art History| Design: @Oluwafemi Oyedele' )+
+  #scale_fill_manual(values = pal, guide = "none") +
+  scico::scale_fill_scico_d(palette = 'roma',guide='none')+
+  labs(x='Total number of Atrtist',y='Artist Nationality',title = 'The majority of the Artists in 2020 are from American and France \n',caption ='Data: Art History | Design: @Oluwafemi Oyedele' )+
   theme_minimal()+
   theme(panel.grid.minor.x = element_line(linetype =
   'dashed',size = 0.7),
@@ -76,12 +88,16 @@ fill = artist_nationality)) +
   panel.grid.minor.y = element_blank(),
  plot.background = element_rect(fill = '#453210'),
  plot.title.position = 'plot',
- plot.title = element_text(family = 'serif',face = 'bold',colour = 'blue',hjust = 0.5),
- plot.caption = element_text(family = 'serif',face = 'bold',colour = 'black',size = 15),
- axis.text.x = element_text(family = 'serif',face = 'bold',colour = 'black',size = 12),
- axis.text.y = element_text(family = 'serif',face = 'bold',colour = 'black',size = 12),
- axis.title.x = element_text(family = 'serif',face = 'bold',colour = 'black',size = 12),
- axis.title.y = element_text(family = 'serif',face = 'bold',colour = 'black',size = 12))
+ plot.title = element_text(family = font,face = 'bold',colour = 'white',hjust = 0.5,size=39),
+ plot.caption = element_text(family = font,face = 'bold',colour = 'black',size = 21),
+ axis.text.x = element_text(family = font,face = 'bold',colour = 'black',size = 20),
+ axis.text.y = element_text(family = font,face = 'bold',colour = 'black',size = 20,hjust = 1),
+ axis.title.x = element_text(family = font,face = 'bold',colour = 'black',size = 20),
+ axis.title.y = element_text(family = font,face = 'bold',colour = 'black',size = 20),
+ plot.margin = margin(rep(15, 4)))
 
 
 
+# Save the plot -----------------------------------------------------------
+
+ggsave(filename = 'Artist.png',plot = last_plot(),path = here::here('2023/2023-01-17-Week-03/'),width = 19,height = 13,dpi = 300)
