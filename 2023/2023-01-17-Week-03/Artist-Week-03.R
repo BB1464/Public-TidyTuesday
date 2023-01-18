@@ -88,12 +88,12 @@ fill = artist_nationality)) +
   panel.grid.minor.y = element_blank(),
  plot.background = element_rect(fill = '#19222B'),
  plot.title.position = 'plot',
- plot.title = element_text(family = font,face = 'bold',colour = 'white',hjust = 0.5,size=41),
- plot.caption = element_text(family = font,face = 'bold',colour = 'black',size = 29),
- axis.text.x = element_text(family = font,face = 'bold',colour = 'black',size = 27),
- axis.text.y = element_text(family = font,face = 'bold',colour = 'black',size = 27,hjust = 1),
- axis.title.x = element_text(family = font,face = 'bold',colour = 'black',size = 27),
- axis.title.y = element_text(family = font,face = 'bold',colour = 'black',size = 27),
+ plot.title = element_text(family = font,face = 'bold',colour = 'red',hjust = 0.5,size=41),
+ plot.caption = element_text(family = font,face = 'bold',colour = 'white',size = 29),
+ axis.text.x = element_text(family = font,face = 'bold',colour = 'white',size = 27),
+ axis.text.y = element_text(family = font,face = 'bold',colour = 'white',size = 27,hjust = 1),
+ axis.title.x = element_text(family = font,face = 'bold',colour = 'white',size = 27),
+ axis.title.y = element_text(family = font,face = 'bold',colour = 'white',size = 27),
  plot.margin = margin(rep(15, 4)))
 
 
