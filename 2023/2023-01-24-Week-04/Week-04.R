@@ -5,7 +5,6 @@ library(tidyverse)
 library(ggtext)
 library(showtext)
 library(camcorder)
-library(scico)
 library(tidytuesdayR)
 library(ggalt)
 
@@ -59,12 +58,12 @@ values_fn = function(x)mean(x,na.rm = TRUE))
 ggplot(data = Alone2,aes(x = Male,xend=Female,y=factor(season),group=factor(season)))+
   geom_dumbbell(colour_x = 'goldenrod1',colour_xend = 'mediumpurple1',size_x = 8,
   size_xend = 8,dot_guide_size = 1,size=1)+
-  annotate(geom = 'curve',x = 23,y = 7,xend = 38,yend = 7,arrow=arrow(type = 'closed'))+
-  annotate(geom = 'curve',x = 97,y = 3,xend = 82,yend = 3,arrow=arrow(type = 'closed'))+
+  annotate(geom = 'curve',x = 22,y = 7,xend = 38,yend = 7,arrow=arrow(type = 'closed'))+
+  annotate(geom = 'curve',x = 99,y = 3,xend = 82,yend = 3,arrow=arrow(type = 'closed'))+
   annotate(geom = 'label',x = 17,y = 7,label=str_wrap(string = 'Less Male in the episode',width = 6),fontface='bold',col='goldenrod1',size=8,fill='#444444')+
   annotate(geom = 'label',x = 95,y = 2,label=str_wrap(string = 'More Female in the episode',width = 6),fontface='bold',col='mediumpurple1',size=8,fill='#444444')+
   labs(x='Number of days lasted in the in the episode',
-  y='Season',caption ='Data: Alone Data | Design: @Oluwafemi Oyedele',title = "<span style = 'font-family:font;'>There were More  </span><span style = 'color:goldenrod1;'> male </span>that lasted in <br>the alone data episode than<span style = 'color:mediumpurple1;'> female.</span>")+
+  y='Season',caption ='Data: Alone Data | Design: @Oluwafemi Oyedele',title = "<span style = 'font-family:font;'>There were more  </span><span style = 'color:mediumpurple1;'> female </span>that lasted in <br>the survival TV series than<span style = 'color:goldenrod1;'> male.</span>")+
   scale_x_continuous(limits = c(0,NA),expand = expansion(mult = c(0,0.1),add = c(0,0.3)))+
   theme_classic()+
   theme(plot.title = element_markdown(family = 'font',face = 'bold',size = 45,colour = 'black',hjust = 0.5),
@@ -73,7 +72,8 @@ ggplot(data = Alone2,aes(x = Male,xend=Female,y=factor(season),group=factor(seas
         panel.grid = element_blank(),plot.caption = element_text(family = font,face = 'bold',colour = 'white',size = 21),
         panel.background = element_rect(fill = '#444444'),
         plot.background = element_rect(fill = '#444444'),
-        axis.title = element_text(family = font,face = 'bold',colour = 'black',size = 25))
+        axis.title = element_text(family = font,face = 'bold',colour = 'black',size = 25),
+        axis.ticks = element_line(colour = 'black',size = 0.9,linetype = 'solid'))
 
 
 
